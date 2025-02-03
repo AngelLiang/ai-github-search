@@ -1,9 +1,10 @@
 "use client"
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 import SearchBox from "../components/SearchBox"
 import Logo from "../components/Logo"
 import { Label } from "@radix-ui/react-label" // 引入 Radix 的 Label 组件
+
 
 export default function Home() {
   const [query, setQuery] = useState("")
@@ -26,8 +27,10 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
       <Logo className="w-64 h-64 mb-8" />
-      {/* 假设 SearchBox 组件支持 value 和 onChange 属性 */}
-      <SearchBox value={query} onChange={setQuery} />
+      {/* 将 SearchBox 组件包裹在 Suspense 边界内 */}
+      <Suspense fallback={<div>加载中...</div>}>
+        <SearchBox value={query} onChange={setQuery} />
+      </Suspense>
       <div className="mt-8 text-center">
         <h2 className="text-lg font-semibold mb-2">Search Examples:</h2>
         <div className="flex flex-wrap gap-2">

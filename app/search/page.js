@@ -1,3 +1,4 @@
+// "use client"; 
 import { searchGitHubIssues } from "../../utils/github"
 import SearchBox from "../../components/SearchBox"
 import Logo from "../../components/Logo"
