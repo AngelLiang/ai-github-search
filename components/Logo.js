@@ -2,7 +2,7 @@ export default function Logo({ className }) {
   // 计算圆边缘45度处的手柄起点：圆心(40,40) + 20 * (cos45, sin45) ≈ (54.1,54.1)
   return (
     <svg 
-      className="w-64 h-64 mb-8" 
+      className={className} 
       viewBox="0 0 100 100" 
       xmlns="http://www.w3.org/2000/svg"
     >

@@ -8,23 +8,26 @@ const openai = new OpenAI({
 
 // generateAIResponse 方法
 export async function* generateAIResponse(query, githubIssues) {
-  const prompt = `
-    ## Query
-    ${query}
-    
-    ## Related GitHub issues
+  const systemPrompt = `
+    ## role
+
+    ai github search
+
+    ## 主要功能
+    - 根据用户问题和相关的 GitHub issue，提供一个能解决用户问题并且结合 GitHub issue 中信息的答案。根据相关资料回答用户问题即可，不要输出其他信息
+    - 问题使用什么语言提问，就使用什么语言回答，如果问题使用英文提问，就使用英文回答， 如果问题使用中文提问，就使用中文回答
+
+    ## 相关资料
 
     ${githubIssues && githubIssues.map((issue) => `- ${issue.title}`).join("\n")}
-    
-    ## 功能说明
-    - 根据 query 和相关的 GitHub issue，提供一个能解决用户问题并且结合 GitHub issue 中信息的答案。
-    - Query 使用什么语言提问，就使用什么语言回答，如果Query使用英文提问，就使用英文回答， 如果Query使用中文提问，就使用中文回答
-    - 如果没有相关信息，则告诉用户没有相关答案。
   `;
 
   const completion = await openai.chat.completions.create({
     model: process.env.OPENAI_MODEL,
-    messages: [{ role: 'user', content: prompt }],
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: query },
+    ],
     max_tokens: 150,
     temperature: 0.7,
     stream: true,

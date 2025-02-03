@@ -15,7 +15,7 @@ export default async function SearchResults({ searchParams }) {
         <SearchBox />
       </div>
       <div className="bg-white shadow-md rounded-lg p-6 mb-8">
-        <h2 className="text-xl font-semibold mb-4">AI Response:</h2>
+        {/* <h2 className="text-xl font-semibold mb-4">AI Response:</h2> */}
         <StreamingAIResponse query={query} githubIssues={githubIssues} />
       </div>
       <div>
